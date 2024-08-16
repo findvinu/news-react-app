@@ -22,6 +22,15 @@ Installation
     # or
     yarn install
 
+Setup
+--------
+1. Create a `.env` file in the root directory with the following variables:
+
+```env
+VITE_NEWS_API_URL=https://newsapi.org/v2/everything
+VITE_NEWS_API_KEY=your_api_key_here
+
+
 Usage
 -------
 1 - Start the development server:

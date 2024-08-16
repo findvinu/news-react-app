@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 function App() {
   const [page, setPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
-  const { data, loading, error } = useFetch(page);
+  const { data, loading, error } = useFetch({ page });
 
   const handleScroll = useCallback(() => {
     if (
