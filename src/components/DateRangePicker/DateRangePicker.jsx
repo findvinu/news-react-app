@@ -1,35 +1,54 @@
-// DateRangePickerComponent.jsx
-import React from 'react';
-import { TextField } from '@mui/material';
-import { DateRangePicker } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
+// src/components/DateRangeFilter/DateRangeFilter.jsx
+import React, { useState } from "react";
+import { Box, TextField, Button, Grid } from "@mui/material";
+import dayjs from "dayjs";
+import "dayjs/locale/en-gb"; // Optional: Import locale if needed
 
-const DateRangePickerComponent = ({ onDateRangeChange }) => {
-  const [dateRange, setDateRange] = React.useState([null, null]);
+const DateRangeFilter = ({ onFilter }) => {
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-  const handleDateRangeChange = (newValue) => {
-    setDateRange(newValue);
-    onDateRangeChange(newValue[0], newValue[1]);
+  const handleFilter = () => {
+    if (startDate && endDate) {
+      onFilter(startDate, endDate);
+    }
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateRangePicker
-        startText="Start"
-        endText="End"
-        value={dateRange}
-        onChange={handleDateRangeChange}
-        renderInput={(startProps, endProps) => (
-          <>
-            <TextField {...startProps} sx={{ mr: 2 }} />
-            <TextField {...endProps} />
-          </>
-        )}
-      />
-    </LocalizationProvider>
+    <Box sx={{ mb: 2 }}>
+      <Grid container spacing={2} alignItems="center" justifyContent="center">
+        <Grid item xs={12} sm={4}>
+          <TextField
+            label="Start Date"
+            type="date"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            onChange={(e) => setStartDate(dayjs(e.target.value).toISOString())}
+            sx={{ mb: 2 }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <TextField
+            label="End Date"
+            type="date"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            onChange={(e) => setEndDate(dayjs(e.target.value).toISOString())}
+            sx={{ mb: 2 }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={4} container justifyContent="center">
+          <Button
+            variant="contained"
+            onClick={handleFilter}
+            sx={{ width: "100%" }}
+          >
+            Apply Filter
+          </Button>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
-export default DateRangePickerComponent;
+export default DateRangeFilter;
