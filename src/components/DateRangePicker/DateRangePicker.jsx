@@ -1,8 +1,7 @@
-// src/components/DateRangeFilter/DateRangeFilter.jsx
 import React, { useState } from "react";
 import { Box, TextField, Button, Grid } from "@mui/material";
 import dayjs from "dayjs";
-import "dayjs/locale/en-gb"; // Optional: Import locale if needed
+import "dayjs/locale/en-gb";
 
 const DateRangeFilter = ({ onFilter }) => {
   const [startDate, setStartDate] = useState(null);
