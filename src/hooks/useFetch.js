@@ -7,7 +7,7 @@ const API_KEY = import.meta.env.VITE_NEWS_API_KEY;
 const useFetch = ({
   page,
   query = "tesla",
-  fromDate = "2024-07-16",
+  fromDate = "2024-7-17",
   sortBy = "publishedAt",
 }) => {
   const [data, setData] = useState([]);
