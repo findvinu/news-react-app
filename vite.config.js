@@ -5,4 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: "/news-react-app",
   plugins: [react()],
-})
+  test: {
+    environment: "jsdom",
+    globals: true,
+  },
+});
