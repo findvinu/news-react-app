@@ -16,7 +16,17 @@ const useFetch = ({
       setLoading(true);
       try {
         const response = await axios.get(
-          `${BASE_URL}?country=${country}&apiKey=${apiKey}`
+          "https://newsapi.org/v2/top-headlines",
+          {
+            params: {
+              country: "us",
+              apiKey: "8f980c9f4adf42a4bd1820978cf92ad4",
+            },
+            headers: {
+              "User-Agent": "Mozilla/5.0",
+              Accept: "application/json",
+            },
+          }
         );
         console.log(response.data);
         setData((prevData) => [...prevData, ...response.data.articles]);
