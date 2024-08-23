@@ -4,12 +4,15 @@ import NewsCard from "./components/NewsCard/NewsCard";
 import Layout from "./components/Layout/Layout";
 import useFetch from "./hooks/useFetch";
 import DateRangeFilter from "./components/DateRangePicker/DateRangePicker";
-import dayjs from "dayjs";
 
 function App() {
   const [page, setPage] = useState(1);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const { data, loading, error } = useFetch({ page });
+  const { data, loading, error } = useFetch({
+    apiKey: "a7c3ff7320f98c1bbd200eb4237b0751",
+  });
 
   const handleScroll = useCallback(() => {
     if (
@@ -30,18 +33,16 @@ function App() {
     setFilteredData(data);
   }, [data]);
 
-  const filterData = (startDate, endDate) => {
-    if (!startDate || !endDate) return;
-
-    const start = dayjs(startDate).startOf("day");
-    const end = dayjs(endDate).endOf("day");
-
-    const result = data.filter((item) => {
-      const itemDate = dayjs(item.publishedAt);
-      return itemDate.isBetween(start, end, null, "[]");
+  const filterData = () => {
+    const filteredArticles = data.filter((article) => {
+      const articleDate = new Date(article.publishedAt);
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      console.log(start, end);
+      return articleDate >= start && articleDate <= end;
     });
 
-    setFilteredData(result);
+    setFilteredData(filteredArticles);
   };
 
   if (loading && page === 1)
@@ -53,12 +54,14 @@ function App() {
 
   if (error) return <p>Error: {error}</p>;
 
-  if (!filteredData.length && page === 1) return <p>No data available.</p>;
-
   return (
     <Layout>
       <Container className="news-container">
-        <DateRangeFilter onFilter={filterData} />
+        <DateRangeFilter
+          onFilter={filterData}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+        />
         <Grid container spacing={2} columns={{ xs: 12, sm: 8, md: 12 }}>
           {filteredData.map((article, index) => (
             <Grid

@@ -1,18 +1,6 @@
-import React, { useState } from "react";
 import { Box, TextField, Button, Grid } from "@mui/material";
-import dayjs from "dayjs";
-import "dayjs/locale/en-gb";
 
-const DateRangeFilter = ({ onFilter }) => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
-  const handleFilter = () => {
-    if (startDate && endDate) {
-      onFilter(startDate, endDate);
-    }
-  };
-
+const DateRangeFilter = ({ onFilter, setStartDate, setEndDate }) => {
   return (
     <Box sx={{ mb: 2 }}>
       <Grid container spacing={2} alignItems="center" justifyContent="center">
@@ -22,7 +10,7 @@ const DateRangeFilter = ({ onFilter }) => {
             type="date"
             fullWidth
             InputLabelProps={{ shrink: true }}
-            onChange={(e) => setStartDate(dayjs(e.target.value).toISOString())}
+            onChange={(e) => setStartDate(e.target.value)}
             sx={{ mb: 2 }}
           />
         </Grid>
@@ -32,16 +20,12 @@ const DateRangeFilter = ({ onFilter }) => {
             type="date"
             fullWidth
             InputLabelProps={{ shrink: true }}
-            onChange={(e) => setEndDate(dayjs(e.target.value).toISOString())}
+            onChange={(e) => setEndDate(e.target.value)}
             sx={{ mb: 2 }}
           />
         </Grid>
         <Grid item xs={12} sm={4} container justifyContent="center">
-          <Button
-            variant="contained"
-            onClick={handleFilter}
-            sx={{ width: "100%" }}
-          >
+          <Button variant="contained" onClick={onFilter} sx={{ width: "100%" }}>
             Apply Filter
           </Button>
         </Grid>

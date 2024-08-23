@@ -39,7 +39,7 @@ Usage
     yarn dev
 
 2 - Open your browser and go to:
-    http://localhost:5173/news-react-app
+    https://localhost:5173/news-react-app
 
 
 Features
