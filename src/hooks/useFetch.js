@@ -4,11 +4,10 @@ import axios from "axios";
 const BASE_URL = import.meta.env.VITE_NEWS_API_URL || "https://gnews.io/api/v4";
 
 const useFetch = ({
-  category = "general",
-  lang = "en",
-  country = "us",
-  max = 10,
-  apiKey = "a7c3ff7320f98c1bbd200eb4237b0751",
+  q = "technology",
+  from = "2024-08-20",
+  to = "2024-08-22",
+  apiKey = "8f980c9f4adf42a4bd1820978cf92ad4",
 }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,15 +17,17 @@ const useFetch = ({
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${BASE_URL}/top-headlines`, {
-          params: {
-            category,
-            lang,
-            country,
-            max,
-            apikey: apiKey,
-          },
+        const params = {
+          q,
+          from,
+          to,
+          apikey: apiKey,
+        };
+
+        const response = await axios.get(`${BASE_URL}/everything`, {
+          params,
         });
+
         console.log("Success:", response.data.articles);
         setData(response.data.articles);
       } catch (err) {
@@ -38,7 +39,7 @@ const useFetch = ({
     };
 
     fetchData();
-  }, [category, lang, country, max, apiKey]);
+  }, [q, from, to, apiKey]);
 
   return { data, loading, error };
 };
